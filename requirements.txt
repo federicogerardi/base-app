@@ -9,3 +9,4 @@ pytest-cov==4.1.0
 black==23.12.1
 flake8==7.0.0
 isort==5.13.2
+loguru==0.7.2

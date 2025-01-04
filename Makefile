@@ -4,7 +4,10 @@ install:
 	pip install -r requirements.txt
 
 test:
-	pytest tests/
+	pytest -v --cov=app tests/
+
+test-report:
+	pytest -v --cov=app --cov-report=html tests/
 
 run:
 	flask run
