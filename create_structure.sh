@@ -1,8 +1,29 @@
 #!/bin/bash
 
 echo "La struttura verrà creata in: $(pwd)"
-read -p "Vuoi procedere? (si/no): " risposta
 
+# Controllo se la directory contiene già i file del progetto
+if [ -d "app" ] || [ -f "requirements.txt" ] || [ -f "Makefile" ]; then
+    echo "ATTENZIONE: La directory contiene già file del progetto!"
+    read -p "Vuoi fare un backup e procedere? (si/no): " backup_risposta
+    
+    backup_risposta=$(echo "$backup_risposta" | tr '[:upper:]' '[:lower:]')
+    if [ "$backup_risposta" = "si" ] || [ "$backup_risposta" = "s" ]; then
+        # Crea backup
+        backup_dir="backup_$(date +%Y%m%d_%H%M%S)"
+        echo "Creazione backup in: $backup_dir"
+        mkdir -p "$backup_dir"
+        [ -d "app" ] && cp -r app "$backup_dir/"
+        [ -f "requirements.txt" ] && cp requirements.txt "$backup_dir/"
+        [ -f "Makefile" ] && cp Makefile "$backup_dir/"
+        [ -f ".gitignore" ] && cp .gitignore "$backup_dir/"
+    else
+        echo "Operazione annullata"
+        exit 1
+    fi
+fi
+
+read -p "Vuoi procedere con la creazione/sovrascrittura? (si/no): " risposta
 risposta=$(echo "$risposta" | tr '[:upper:]' '[:lower:]')
 
 if [ "$risposta" != "si" ] && [ "$risposta" != "s" ]; then
