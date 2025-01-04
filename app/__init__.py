@@ -3,6 +3,7 @@ from flask_cors import CORS
 from app.config import config_by_name
 from app.core.database import init_db
 from app.core.auth import init_auth
+from app.core.security import init_security, limiter
 from app.core.exceptions import AppException
 from app.core.logger import setup_logger
 from werkzeug.exceptions import HTTPException
@@ -20,6 +21,7 @@ def create_app(config_name='development'):
     # Inizializzazione componenti
     init_db(app)
     init_auth(app)
+    init_security(app)
     
     # Registrazione blueprints
     from app.controllers import register_blueprints

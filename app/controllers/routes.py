@@ -1,8 +1,10 @@
 from . import main
 from flask import jsonify, current_app
 from app.core.exceptions import AppException
+from app.core.security import limiter
 
 @main.route('/')
+@limiter.limit("1 per second")
 def index():
     current_app.logger.info("Index route accessed")
     return jsonify({
@@ -11,6 +13,7 @@ def index():
     })
 
 @main.route('/test-error')
+@limiter.limit("5 per minute")
 def test_error():
     """Test per AppException personalizzata"""
     current_app.logger.info("Test error route accessed")
