@@ -1,12 +1,14 @@
 from flask import Flask, jsonify
 from flask_cors import CORS
+from werkzeug.exceptions import HTTPException
 from app.config import config_by_name
 from app.core.database import init_db
 from app.core.auth import init_auth
-from app.core.security import init_security, limiter
+from app.core.security import init_security
+from app.core.api import init_api
 from app.core.exceptions import AppException
 from app.core.logger import setup_logger
-from werkzeug.exceptions import HTTPException
+from app.controllers import register_blueprints
 
 def create_app(config_name='development'):
     app = Flask(__name__)
@@ -23,54 +25,39 @@ def create_app(config_name='development'):
     init_auth(app)
     init_security(app)
     
-    # Registrazione blueprints
-    from app.controllers import register_blueprints
+    # Inizializza l'API
+    api = init_api(app)
+    
+    # Registra gli altri blueprints
     register_blueprints(app)
     
-    # Log dell'avvio dell'applicazione
-    logger.info(f"Application started in {config_name} mode")
-
+    @app.errorhandler(404)
+    def not_found_error(error):
+        """Handle 404 errors."""
+        return jsonify({
+            'success': False,
+            'message': 'Not Found'
+        }), 404
+    
     @app.errorhandler(Exception)
     def handle_exception(error):
         """Handle any uncaught exception."""
-        try:
-            # AppException
-            if isinstance(error, AppException):
-                logger.warning(f"AppException: {str(error)}")
-                return jsonify({
-                    'success': False,
-                    'message': str(error)
-                }), error.status_code
-
-            # HTTPException (404, etc)
-            if isinstance(error, HTTPException):
-                logger.info(f"HTTP {error.code}: {error.description}")
-                return jsonify({
-                    'success': False,
-                    'message': error.description
-                }), error.code
-
-            # Errori non gestiti
-            logger.error(f"Unhandled error: {str(error)}")
-            
-            response = {
-                'success': False,
-                'message': 'Internal Server Error'
-            }
-            
-            if app.debug:
-                response['debug'] = {
-                    'error': str(error),
-                    'type': error.__class__.__name__
-                }
-            
-            return jsonify(response), 500
-            
-        except Exception as e:
-            logger.error(f"Error in error handler: {str(e)}")
+        if isinstance(error, AppException):
             return jsonify({
                 'success': False,
-                'message': 'Internal Server Error'
-            }), 500
+                'message': str(error)
+            }), error.status_code
+            
+        if isinstance(error, HTTPException):
+            return jsonify({
+                'success': False,
+                'message': error.description
+            }), error.code
+        
+        app.logger.error(f"Unhandled error: {str(error)}")
+        return jsonify({
+            'success': False,
+            'message': 'Internal Server Error'
+        }), 500
     
     return app

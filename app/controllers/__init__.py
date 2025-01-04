@@ -1,8 +1,6 @@
-from flask import Blueprint
-
-main = Blueprint('main', __name__)
-
-from . import routes
+from .web_routes import web
 
 def register_blueprints(app):
-    app.register_blueprint(main)
+    """Registra tutti i blueprints dell'applicazione"""
+    # Registra solo le route web
+    app.register_blueprint(web)

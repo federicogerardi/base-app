@@ -34,6 +34,7 @@ ENV/
 .vscode/
 *.swp
 *.swo
+*.code-workspace
 
 # Flask
 instance/
@@ -46,5 +47,4 @@ htmlcov/
 # Logs
 *.log
 
-base-app.code-workspace
 appunti.txt

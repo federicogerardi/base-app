@@ -4,7 +4,7 @@ def test_app_creation(app):
 
 def test_index_route(client):
     """Test della rotta principale"""
-    response = client.get('/')
+    response = client.get('/api/main/')
     assert response.status_code == 200
     json_data = response.get_json()
     assert json_data['success'] == True
@@ -12,14 +12,14 @@ def test_index_route(client):
 
 def test_404_error(client):
     """Test della gestione 404"""
-    response = client.get('/route-not-exists')
+    response = client.get('/api/not-exists')
     assert response.status_code == 404
     json_data = response.get_json()
     assert json_data['success'] == False
 
 def test_custom_error(client):
     """Test della gestione errori personalizzati"""
-    response = client.get('/test-error')
+    response = client.get('/api/main/test-error')
     assert response.status_code == 400
     json_data = response.get_json()
     assert json_data['success'] == False

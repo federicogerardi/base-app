@@ -1,31 +1,38 @@
-from . import main
-from flask import jsonify, current_app
+from flask import current_app
 from app.core.exceptions import AppException
 from app.core.security import limiter
+from app.core.api import main_ns, success_model, error_model
+from flask_restx import Resource
 
-@main.route('/')
-@limiter.limit("1 per second")
-def index():
-    current_app.logger.info("Index route accessed")
-    return jsonify({
-        'success': True,
-        'message': 'Flask API is running'
-    })
+@main_ns.route('/')
+class IndexResource(Resource):
+    @main_ns.doc('index', description='Endpoint principale dell\'API')
+    @main_ns.response(200, 'Success', success_model)
+    @main_ns.response(429, 'Too Many Requests', error_model)
+    @limiter.limit("1 per second")
+    def get(self):
+        """Endpoint principale dell'API
+        
+        Returns:
+            Un messaggio di benvenuto con status success
+        """
+        current_app.logger.info("Index route accessed")
+        return {
+            'success': True,
+            'message': 'Flask API is running'
+        }
 
-@main.route('/test-error')
-@limiter.limit("5 per minute")
-def test_error():
-    """Test per AppException personalizzata"""
-    current_app.logger.info("Test error route accessed")
-    raise AppException("Questo è un errore di test", status_code=400)
-
-@main.route('/test-exception')
-def test_exception():
-    """Test per errore non gestito"""
-    current_app.logger.info("Test exception route accessed")
-    try:
-        # Generiamo un errore di esempio
-        result = 1 / 0  # ZeroDivisionError
-    except Exception as e:
-        current_app.logger.error(f"Error in test_exception: {str(e)}")
-        raise Exception("Errore di test: divisione per zero") 
+@main_ns.route('/test-error')
+class TestErrorResource(Resource):
+    @main_ns.doc('test_error', description='Test della gestione errori')
+    @main_ns.response(400, 'Bad Request', error_model)
+    @main_ns.response(429, 'Too Many Requests', error_model)
+    @limiter.limit("5 per minute")
+    def get(self):
+        """Test endpoint per la gestione degli errori
+        
+        Raises:
+            AppException: Solleva un errore di test
+        """
+        current_app.logger.info("Test error route accessed")
+        raise AppException("Questo è un errore di test", status_code=400)
