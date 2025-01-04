@@ -2,6 +2,7 @@ import pytest
 from app import create_app
 from app.core.database import db
 from app.models.base import BaseModel
+from app.core.auth import AuthManager
 
 # Modello di test spostato qui
 class TestModel(BaseModel):
@@ -39,3 +40,18 @@ def runner(app):
 def test_model():
     """Fixture per accedere al modello di test"""
     return TestModel
+
+@pytest.fixture
+def auth_headers(app):
+    """Fixture per headers di autenticazione"""
+    with app.app_context():
+        token = AuthManager.create_token('test_user')
+        return {'Authorization': f'Bearer {token}'}
+
+@pytest.fixture
+def authenticated_client(client, auth_headers):
+    """Client già autenticato per i test"""
+    def _make_request(*args, **kwargs):
+        kwargs['headers'] = {**kwargs.get('headers', {}), **auth_headers}
+        return client.get(*args, **kwargs)
+    return _make_request

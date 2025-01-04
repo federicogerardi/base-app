@@ -1,5 +1,12 @@
 {% extends "base.html" %}
 
+{% block title %}Homepage{% endblock %}
+
 {% block content %}
-<h1>Benvenuto</h1>
+<div class="jumbotron">
+    <h1 class="display-4">Benvenuto</h1>
+    <p class="lead">Questa è l'interfaccia web dell'applicazione.</p>
+    <hr class="my-4">
+    <p>Per accedere alle API, visita la <a href="{{ url_for('api_v1.doc') }}">documentazione API</a>.</p>
+</div>
 {% endblock %} 

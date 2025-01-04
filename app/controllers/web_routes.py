@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template
+from app.core.auth import auth_required
 
 web = Blueprint('web', __name__)
 
@@ -13,6 +14,7 @@ def about():
     return render_template('about.html')
 
 @web.route('/dashboard')
+@auth_required
 def dashboard():
-    """Dashboard dell'applicazione"""
+    """Dashboard dell'applicazione (richiede autenticazione)"""
     return render_template('dashboard.html') 
