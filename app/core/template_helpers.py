@@ -1,9 +1,16 @@
+"""
+Modulo degli helper per i template.
+
+Fornisce funzioni helper per i template Jinja, come `safe_url_for`, che
+gestisce in modo sicuro la generazione degli URL per gli endpoint.
+"""
+
 from flask import url_for, current_app
 
 def safe_url_for(endpoint, **kwargs):
     """
-    Wrapper sicuro per url_for che gestisce endpoints inesistenti
-    Ritorna # se l'endpoint non esiste
+    Genera un URL sicuro per un endpoint.
+    Ritorna '#' se l'endpoint non esiste.
     """
     try:
         # Verifica che l'endpoint esista prima di chiamare url_for
@@ -16,5 +23,5 @@ def safe_url_for(endpoint, **kwargs):
         return "#"
 
 def init_template_helpers(app):
-    """Inizializza gli helper per i template"""
+    """Inizializza gli helper per i template."""
     app.jinja_env.globals.update(safe_url_for=safe_url_for) 

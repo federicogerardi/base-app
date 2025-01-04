@@ -1,3 +1,12 @@
+"""
+Modulo di inizializzazione dell'applicazione Flask.
+
+Questo modulo contiene la funzione `create_app` che configura e restituisce
+un'istanza dell'app Flask. Include l'inizializzazione di componenti core come
+il database, l'autenticazione, la sicurezza, e la registrazione dei blueprint.
+Gestisce anche gli errori comuni come 404 e altre eccezioni generiche.
+"""
+
 from flask import Flask, jsonify
 from flask_cors import CORS
 from werkzeug.exceptions import HTTPException
@@ -12,31 +21,32 @@ from app.controllers import register_blueprints
 from app.core.template_helpers import init_template_helpers
 
 def create_app(config_name='development'):
+    """Crea e configura l'app Flask."""
     app = Flask(__name__)
-    CORS(app)
+    CORS(app)  # Abilita CORS per tutte le route
     
-    # Configurazione
+    # Carica la configurazione basata sul nome fornito
     app.config.from_object(config_by_name[config_name])
     
-    # Setup logger
+    # Configura il logger dell'applicazione
     logger = setup_logger(app)
     
-    # Inizializzazione componenti
-    init_db(app)
-    init_auth(app)
-    init_security(app)
+    # Inizializza i componenti core
+    init_db(app)  # Inizializza il database
+    init_auth(app)  # Inizializza l'autenticazione
+    init_security(app)  # Inizializza la sicurezza
     
-    # Inizializza l'API
+    # Inizializza l'API e registra i blueprint
     api = init_api(app)
-    
-    # Registra gli altri blueprints
     register_blueprints(app)
     
+    # Inizializza gli helper per i template
     init_template_helpers(app)
     
+    # Gestione degli errori
     @app.errorhandler(404)
     def not_found_error(error):
-        """Handle 404 errors."""
+        """Gestisce gli errori 404."""
         return jsonify({
             'success': False,
             'message': 'Not Found'
@@ -44,7 +54,7 @@ def create_app(config_name='development'):
     
     @app.errorhandler(Exception)
     def handle_exception(error):
-        """Handle any uncaught exception."""
+        """Gestisce le eccezioni non catturate."""
         if isinstance(error, AppException):
             return jsonify({
                 'success': False,
