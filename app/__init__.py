@@ -9,6 +9,7 @@ from app.core.api import init_api
 from app.core.exceptions import AppException
 from app.core.logger import setup_logger
 from app.controllers import register_blueprints
+from app.core.template_helpers import init_template_helpers
 
 def create_app(config_name='development'):
     app = Flask(__name__)
@@ -30,6 +31,8 @@ def create_app(config_name='development'):
     
     # Registra gli altri blueprints
     register_blueprints(app)
+    
+    init_template_helpers(app)
     
     @app.errorhandler(404)
     def not_found_error(error):

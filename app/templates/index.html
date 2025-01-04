@@ -3,10 +3,72 @@
 {% block title %}Homepage{% endblock %}
 
 {% block content %}
-<div class="jumbotron">
-    <h1 class="display-4">Benvenuto</h1>
-    <p class="lead">Questa è l'interfaccia web dell'applicazione.</p>
-    <hr class="my-4">
-    <p>Per accedere alle API, visita la <a href="{{ url_for('api_v1.doc') }}">documentazione API</a>.</p>
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body p-5">
+                <h1 class="display-4 fw-bold mb-4">
+                    <span class="text-primary"><i class="fas fa-cube"></i></span>
+                    Benvenuto
+                </h1>
+                
+                <p class="lead mb-4">
+                    Questa è un'applicazione moderna costruita con Flask, 
+                    che offre un'API RESTful e un'interfaccia web intuitiva.
+                </p>
+
+                <div class="row g-4 py-4">
+                    <div class="col-md-4">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-shrink-0 me-3">
+                                <div class="p-3 bg-primary bg-opacity-10 rounded-circle">
+                                    <i class="fas fa-rocket text-primary fa-2x"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <h5 class="mb-1">Veloce</h5>
+                                <p class="text-muted mb-0">Performance ottimizzate</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-shrink-0 me-3">
+                                <div class="p-3 bg-success bg-opacity-10 rounded-circle">
+                                    <i class="fas fa-shield-alt text-success fa-2x"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <h5 class="mb-1">Sicura</h5>
+                                <p class="text-muted mb-0">JWT Authentication</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-shrink-0 me-3">
+                                <div class="p-3 bg-info bg-opacity-10 rounded-circle">
+                                    <i class="fas fa-code text-info fa-2x"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <h5 class="mb-1">Moderna</h5>
+                                <p class="text-muted mb-0">API RESTful</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="my-4">
+
+                <div class="d-flex align-items-center gap-3">
+                    <a href="{{ safe_url_for('api_v1.doc') }}" class="btn btn-primary btn-lg">
+                        <i class="fas fa-book me-2"></i>
+                        Documentazione API
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-{% endblock %} 
+{% endblock %}

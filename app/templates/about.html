@@ -3,8 +3,58 @@
 {% block title %}About{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1>About</h1>
-    <p>Questa è la pagina About della tua applicazione Flask.</p>
+<div class="container py-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h1 class="card-title text-primary mb-4">
+                        <i class="fas fa-info-circle"></i> About
+                    </h1>
+                    
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="card bg-light">
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        <i class="fas fa-rocket text-success"></i> 
+                                        Caratteristiche
+                                    </h5>
+                                    <ul class="list-unstyled">
+                                        <li><i class="fas fa-check text-success mr-2"></i>API RESTful</li>
+                                        <li><i class="fas fa-check text-success mr-2"></i>Autenticazione JWT</li>
+                                        <li><i class="fas fa-check text-success mr-2"></i>Database SQLAlchemy</li>
+                                        <li><i class="fas fa-check text-success mr-2"></i>Test Coverage 88%</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card bg-light">
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        <i class="fas fa-tools text-primary"></i> 
+                                        Tecnologie
+                                    </h5>
+                                    <ul class="list-unstyled">
+                                        <li><i class="fab fa-python text-primary mr-2"></i>Python 3.8+</li>
+                                        <li><i class="fab fa-flask text-primary mr-2"></i>Flask Framework</li>
+                                        <li><i class="fas fa-database text-primary mr-2"></i>PostgreSQL/SQLite</li>
+                                        <li><i class="fab fa-bootstrap text-primary mr-2"></i>Bootstrap 4</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p class="lead text-muted">
+                        <i class="fas fa-quote-left text-secondary mr-2"></i>
+                        Questa applicazione è stata sviluppata seguendo le migliori pratiche di sviluppo software
+                        e utilizzando tecnologie moderne e affidabili.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-{% endblock %} 
+{% endblock %}
