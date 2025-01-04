@@ -188,6 +188,10 @@ def create_app(config_name='development'):
     init_db(app)
     init_auth(app)
     
+    # Registrazione blueprints
+    from app.controllers import register_blueprints
+    register_blueprints(app)
+    
     # Gestione errori
     @app.errorhandler(AppException)
     def handle_app_exception(error):
@@ -214,16 +218,14 @@ clean:
 	find . -type f -name "*.pyc" -delete
 EOL
 
-# Creazione degli altri file vuoti
-touch app/config/{development.py,production.py,testing.py}
-touch app/core/{__init__.py,database.py,auth.py}
+# Creazione degli altri file vuoti (rimuovere quelli già creati)
 touch app/models/__init__.py
-touch app/controllers/__init__.py
 touch app/views/__init__.py
 touch app/views/templates/base.html
 touch app/utils/{__init__.py,helpers.py}
 touch tests/{__init__.py,conftest.py}
-touch {requirements.txt,run.py,README.md}
+touch run.py
+touch README.md
 
 # Imposta i permessi di esecuzione
 chmod +x run.py
@@ -241,6 +243,64 @@ pytest-cov==4.1.0
 black==23.12.1
 flake8==7.0.0
 isort==5.13.2
+EOL
+
+# Creazione di app/controllers/__init__.py
+cat > app/controllers/__init__.py << 'EOL'
+from flask import Blueprint
+
+main = Blueprint('main', __name__)
+
+from . import routes
+
+def register_blueprints(app):
+    app.register_blueprint(main)
+EOL
+
+# Creazione di app/controllers/routes.py
+cat > app/controllers/routes.py << 'EOL'
+from . import main
+from flask import jsonify
+
+@main.route('/')
+def index():
+    return jsonify({
+        "status": "success",
+        "message": "Flask API is running"
+    })
+EOL
+
+# Creazione del .gitignore
+cat > .gitignore << 'EOL'
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+ENV/
+
+# Database
+*.db
+*.sqlite3
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Flask
+instance/
+.webassets-cache
+
+# Coverage
+.coverage
+htmlcov/
+
+# Logs
+*.log
 EOL
 
 echo "Struttura del progetto creata con successo nella directory corrente"
