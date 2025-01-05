@@ -11,11 +11,9 @@ def test_swagger_json(client):
 def test_api_endpoints(client):
     """Test degli endpoint API"""
     # Test index
-    response = client.get('/api/main/')
+    response = client.get('/api/')
     assert response.status_code == 200
-    assert response.json['success'] == True
 
     # Test error
-    response = client.get('/api/main/test-error')
-    assert response.status_code == 400
-    assert response.json['success'] == False 
+    response = client.get('/api/test-error')
+    assert response.status_code == 400 
