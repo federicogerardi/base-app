@@ -1,12 +1,18 @@
+from app.controllers.base import BaseController
 from app.services.dashboard_service import DashboardService
-from flask import render_template
 
-class DashboardController:
-    @staticmethod
-    def index():
+class DashboardController(BaseController):
+    def __init__(self):
+        super().__init__()
+    
+    def index(self):
         """Logica per la dashboard principale"""
-        stats = DashboardService.get_dashboard_stats()
-        activities = DashboardService.get_recent_activities()
-        return render_template('dashboard.html', 
-                             stats=stats,
-                             activities=activities) 
+        try:
+            stats = DashboardService.get_dashboard_stats()
+            activities = DashboardService.get_recent_activities()
+            return self.render_view('dashboard.html', 
+                                  stats=stats,
+                                  activities=activities,
+                                  title="Dashboard")
+        except Exception as e:
+            return self.handle_error(str(e)) 
