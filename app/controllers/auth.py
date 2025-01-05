@@ -1,9 +1,10 @@
-from flask import redirect, url_for, flash, request
+from flask import redirect, url_for, flash, request, current_app
 from flask_login import login_user, logout_user, current_user
 from app.controllers.base import BaseController
 from app.models.user import User
 from app.core.database import db
 from app.forms.auth_forms import LoginForm, RegistrationForm
+from app.services.auth_service import AuthService
 
 class AuthController(BaseController):
     def __init__(self):
@@ -23,24 +24,33 @@ class AuthController(BaseController):
         """Gestisce il processo di login"""
         try:
             form = LoginForm()
+            current_app.logger.info(f"Login attempt with email: {form.email.data}")
             
             if form.validate_on_submit():
-                user = User.query.filter_by(email=form.email.data).first()
+                current_app.logger.info("Form validated")
+                success, message, user = AuthService.login(
+                    email=form.email.data,
+                    password=form.password.data
+                )
                 
-                if user and user.check_password(form.password.data):
+                if success:
                     login_user(user, remember=form.remember_me.data)
-                    user.update_last_login()
-                    
                     next_page = request.args.get('next')
                     if not next_page or not next_page.startswith('/'):
                         next_page = url_for('dashboard.index')
-                        
+                    
                     flash('Login effettuato con successo!', 'success')
                     return redirect(next_page)
+                else:
+                    current_app.logger.warning(f"Failed login attempt for email: {form.email.data}")
+                    flash(message, 'danger')
+            else:
+                current_app.logger.warning("Form validation failed")
+                flash('Email o password non validi', 'danger')
                 
-            flash('Email o password non validi', 'danger')
             return redirect(url_for('auth.login'))
         except Exception as e:
+            current_app.logger.error(f"Login error: {str(e)}")
             return self.handle_error(str(e))
 
     def register(self):
@@ -59,25 +69,18 @@ class AuthController(BaseController):
             form = RegistrationForm()
             
             if form.validate_on_submit():
-                if User.query.filter_by(email=form.email.data).first():
-                    flash('Email già registrata', 'danger')
-                    return redirect(url_for('auth.register'))
-                    
-                if User.query.filter_by(username=form.username.data).first():
-                    flash('Username già in uso', 'danger')
-                    return redirect(url_for('auth.register'))
-                
-                user = User(
+                success, message, user = AuthService.register_user(
                     email=form.email.data,
                     username=form.username.data,
                     password=form.password.data
                 )
                 
-                db.session.add(user)
-                db.session.commit()
-                
-                flash('Registrazione completata con successo!', 'success')
-                return redirect(url_for('auth.login'))
+                if success:
+                    flash('Registrazione completata con successo!', 'success')
+                    return redirect(url_for('auth.login'))
+                else:
+                    flash(message, 'danger')
+                    return redirect(url_for('auth.register'))
                 
             return self.render_view('auth/register.html', 
                                   title="Registrati",
@@ -88,8 +91,11 @@ class AuthController(BaseController):
     def logout(self):
         """Gestisce il processo di logout"""
         try:
-            logout_user()
-            flash('Logout effettuato con successo!', 'success')
+            success, message = AuthService.logout()
+            if success:
+                flash(message, 'success')
+            else:
+                flash(message, 'danger')
             return redirect(url_for('auth.login'))
         except Exception as e:
             return self.handle_error(str(e)) 

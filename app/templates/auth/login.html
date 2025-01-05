@@ -14,7 +14,7 @@
                     <h2 class="mb-0">Login</h2>
                 </div>
                 
-                <form method="POST" class="needs-validation" novalidate>
+                <form method="POST" action="{{ safe_url_for('auth.login_post') }}" class="needs-validation" novalidate>
                     {{ form.csrf_token }}
                     
                     <div class="mb-3">

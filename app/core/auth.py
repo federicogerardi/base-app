@@ -20,7 +20,7 @@ def init_auth(app):
     """Inizializza il sistema di autenticazione"""
     jwt.init_app(app)
     login_manager.init_app(app)
-    login_manager.login_view = 'auth.login'  # specificheremo questa route più tardi
+    login_manager.login_view = 'auth.login'
     login_manager.login_message = 'Per favore effettua il login per accedere a questa pagina.'
     login_manager.login_message_category = 'warning'
     

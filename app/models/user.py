@@ -37,7 +37,7 @@ class User(BaseModel, UserMixin):
 
     def update_last_login(self):
         """Aggiorna il timestamp dell'ultimo login"""
-        self.last_login = datetime.utcnow()
+        self.last_login = datetime.now(UTC)
         db.session.commit()
 
     def to_dict(self):

@@ -1,7 +1,7 @@
 from flask import Blueprint
-from app.controllers.auth_controller import AuthController
+from app.controllers.auth import AuthController
 
-bp = Blueprint('auth', __name__, url_prefix='/auth')
+bp = Blueprint('auth', __name__)
 
 auth_controller = AuthController()
 
