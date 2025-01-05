@@ -36,6 +36,13 @@
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 }
 
+/* Smooth Transitions */
+*, *::before, *::after {
+    transition: background-color 0.2s ease-out,
+                color 0.2s ease-out,
+                border-color 0.2s ease-out;
+}
+
 /* Dark Theme */
 [data-theme="dark"] {
   --body-bg: var(--gray-900);
