@@ -1,37 +1,21 @@
-from flask import Blueprint
-from flask_restx import Api, Resource, fields
+from flask_restx import Api
+from app.controllers.api import APIController
 
-# Crea un blueprint per l'API
-blueprint = Blueprint('api_v1', __name__, url_prefix='/api')
-
-# Inizializza l'API con la documentazione
-api = Api(blueprint,
-    title='Flask Starter API',
-    version='1.0',
-    description='A Flask REST API starter kit',
-    doc='/docs/',
-    specs_url='/swagger.json'
-)
-
-# Namespace per organizzare le API
-main_ns = api.namespace('main', 
-    description='Main operations'
-)
-
-# Modelli per la documentazione
-error_model = api.model('Error', {
-    'success': fields.Boolean(default=False),
-    'message': fields.String(required=True)
-})
-
-success_model = api.model('Success', {
-    'success': fields.Boolean(default=True),
-    'message': fields.String(required=True)
-})
-
-# Importa i controllers qui per evitare import circolari
 def init_api(app):
-    """Inizializza l'API e la documentazione"""
-    from app.controllers.dashboard import DashboardController  # Assicurati che questo sia corretto
-    app.register_blueprint(blueprint)
+    """Inizializza l'API."""
+    api = Api(
+        app,
+        version='1.0',
+        title='Flask API',
+        description='API Documentation',
+        doc='/api/docs',
+        prefix='/api'
+    )
+    
+    # Crea un namespace per le API
+    ns = api.namespace('', description='API operations')
+    
+    # Registra i controller
+    ns.add_resource(APIController, '/')
+    
     return api 
