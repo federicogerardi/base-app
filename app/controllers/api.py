@@ -27,14 +27,3 @@ class APIController(Resource):
             'success': True,
             'message': 'POST request processed successfully'
         }
-
-@api_ns.route('/test-error')
-class APIErrorController(Resource):
-    @api_ns.doc('get_error')
-    @api_ns.response(400, 'Bad Request')
-    def get(self):
-        """Test endpoint per gli errori"""
-        return {
-            'success': False,
-            'message': 'Questo è un errore di test'
-        }, 400 
