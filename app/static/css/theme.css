@@ -96,6 +96,19 @@ body {
   background-color: rgba(var(--card-bg), 0.8);
 }
 
+.navbar .nav-link,
+.navbar .navbar-brand,
+.navbar .btn {
+  color: var(--text-primary);
+  transition: color 0.3s ease;
+}
+
+.navbar .nav-link:hover,
+.navbar .navbar-brand:hover,
+.navbar .btn:hover {
+  color: var(--primary);
+}
+
 /* Custom Breadcrumb */
 .breadcrumb-item + .breadcrumb-item::before {
   color: var(--text-secondary);
