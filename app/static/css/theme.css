@@ -88,8 +88,8 @@ body {
 
 /* Custom Navigation */
 .navbar {
-  backdrop-filter: blur(10px);
-  background-color: rgba(var(--card-bg), 0.8);
+    background-color: var(--card-bg);
+    border-color: var(--border-color);
 }
 
 .navbar .nav-link,
@@ -163,4 +163,33 @@ p {
 
 .list-group-item:hover {
     background-color: var(--border-color);
+}
+
+/* Form Controls */
+.form-control,
+.input-group-text {
+    background-color: var(--body-bg);
+    border-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+.form-control:focus {
+    background-color: var(--body-bg);
+    border-color: var(--primary);
+    color: var(--text-primary);
+    box-shadow: 0 0 0 0.25rem rgba(var(--primary), 0.25);
+}
+
+.form-check-input {
+    background-color: var(--body-bg);
+    border-color: var(--border-color);
+}
+
+.form-check-input:checked {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+.form-label {
+    color: var(--text-primary);
 } 
