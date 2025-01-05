@@ -47,4 +47,6 @@ htmlcov/
 # Logs
 *.log
 
+# Custom
 appunti.txt
+scripts/reset_users.py

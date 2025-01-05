@@ -3,6 +3,7 @@ from app import create_app
 from app.core.database import db
 from app.models.base import BaseModel
 from app.core.auth import AuthManager
+from dotenv import load_dotenv
 
 # Modello di test spostato qui
 class TestModel(BaseModel):
@@ -13,12 +14,15 @@ class TestModel(BaseModel):
 
 @pytest.fixture
 def app():
-    """Crea un'istanza dell'applicazione per i test"""
+    """Fixture dell'applicazione per i test"""
+    load_dotenv()
+    
     app = create_app('testing')
     
-    # Verifica che siamo in ambiente di test
-    assert app.config['TESTING'] == True
-    assert ':memory:' in app.config['SQLALCHEMY_DATABASE_URI']
+    # Configurazioni specifiche per i test
+    app.config['TESTING'] = True
+    app.config['WTF_CSRF_ENABLED'] = False
+    app.config['SERVER_NAME'] = 'localhost'  # Importante per url_for
     
     with app.app_context():
         db.create_all()

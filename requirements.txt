@@ -12,3 +12,7 @@ black==23.12.1
 flake8==7.0.0
 isort==5.13.2
 loguru==0.7.2
+flask-login==0.6.3
+Flask-WTF==1.2.1
+WTForms==3.1.2
+email_validator==2.1.1  # per la validazione delle email nei form

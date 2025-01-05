@@ -9,8 +9,15 @@ db = SQLAlchemy()
 migrate = Migrate()
 
 def init_db(app):
+    """Inizializza il database"""
     db.init_app(app)
     migrate.init_app(app, db)
+    
+    with app.app_context():
+        # Crea tutte le tabelle se non esistono
+        db.create_all()
+        
+    return db
 
 class DatabaseError(Exception):
     """Eccezione base per errori del database"""

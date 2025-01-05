@@ -6,12 +6,23 @@ from flask_jwt_extended import (
     get_jwt, jwt_required
 )
 from datetime import timedelta
+from flask_login import LoginManager
+from app.models import User
 
 jwt = JWTManager()
+login_manager = LoginManager()
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
 def init_auth(app):
     """Inizializza il sistema di autenticazione"""
     jwt.init_app(app)
+    login_manager.init_app(app)
+    login_manager.login_view = 'auth.login'  # specificheremo questa route più tardi
+    login_manager.login_message = 'Per favore effettua il login per accedere a questa pagina.'
+    login_manager.login_message_category = 'warning'
     
     # Gestione errori JWT
     @jwt.expired_token_loader

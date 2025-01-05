@@ -1,25 +1,17 @@
 import os
-from pathlib import Path
+from datetime import timedelta
 
 class DevelopmentConfig:
-    # Debug e ambiente
-    DEBUG = bool(int(os.getenv('FLASK_DEBUG', '0')))
-    TESTING = False
-    
-    # Directory di base
-    BASE_DIR = Path(__file__).resolve().parent.parent.parent
+    # Flask
+    SECRET_KEY = os.getenv('SECRET_KEY', 'dev_secret_key')
     
     # Database
-    SQLALCHEMY_DATABASE_URI = f'sqlite:///{BASE_DIR}/dev.db'
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///dev.db'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     
-    # Sicurezza
-    SECRET_KEY = os.getenv('SECRET_KEY', 'dev-secret-key')
-    JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY', 'jwt-secret-key')
+    # JWT
+    JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY', 'dev_jwt_secret')
+    JWT_ACCESS_TOKEN_EXPIRES = timedelta(days=1)
     
-    # Rate Limiting
-    RATELIMIT_DEFAULT = "200 per day"
-    RATELIMIT_STORAGE_URL = "memory://"
-    
-    # Logging
-    LOG_LEVEL = "DEBUG"
+    # Debug
+    DEBUG = True
