@@ -33,8 +33,11 @@ def create_app(config_name='development'):
     # Registra i blueprint
     from app.routes.auth import bp as auth_bp
     from app.controllers.web_routes import web as web_bp
+    from app.routes.dashboard import dashboard
+    
     app.register_blueprint(auth_bp, url_prefix='/auth')
     app.register_blueprint(web_bp)
+    app.register_blueprint(dashboard)
     
     # Inizializza l'API
     api = init_api(app)
