@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Nuovo Foglio{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="d-flex align-items-center gap-3">
+            <h1 class="h3 mb-0">
+                <i class="fas fa-plus text-primary"></i> Nuovo Foglio
+            </h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item">
+                        <a href="{{ url_for('dashboard.index') }}" class="text-decoration-none">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="{{ url_for('dashboard.sheet_index') }}" class="text-decoration-none">Fogli</a>
+                    </li>
+                    <li class="breadcrumb-item active">Nuovo</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Form -->
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <form method="POST" class="needs-validation" novalidate>
+                <div class="mb-3">
+                    <label for="name" class="form-label">Nome</label>
+                    <input type="text" class="form-control" id="name" name="name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Descrizione</label>
+                    <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+                </div>
+                <div class="d-flex justify-content-end gap-2">
+                    <a href="{{ url_for('dashboard.sheet_index') }}" class="btn btn-light">
+                        <i class="fas fa-times"></i> Annulla
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Salva
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %} 
