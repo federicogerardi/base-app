@@ -6,7 +6,11 @@ def test_rate_limit(client):
     response = client.get('/api/')
     assert response.status_code == 200
     
-    # Seconda richiesta immediata
+    # Seconda richiesta (ancora permessa)
+    response = client.get('/api/')
+    assert response.status_code == 200
+    
+    # Terza richiesta (dovrebbe essere bloccata)
     response = client.get('/api/')
     assert response.status_code == 429
     

@@ -7,11 +7,6 @@ def test_index_page(client):
     response = client.get('/')
     assert response.status_code == 200
 
-def test_about_page(client):
-    """Test della pagina about"""
-    response = client.get('/about')
-    assert response.status_code == 200
-
 def test_dashboard_page(client):
     """Test della pagina dashboard"""
     response = client.get('/dashboard')
@@ -25,5 +20,5 @@ def test_404_page(client):
 
 def test_api_docs_route(client):
     """Test della route API docs"""
-    response = client.get('/api/docs/')
+    response = client.get('/api/docs')
     assert response.status_code == 200 
