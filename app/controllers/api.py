@@ -1,39 +1,40 @@
 """
 Controller per le API
 """
-from flask_restx import Resource
-from flask import current_app, jsonify
-from app.controllers.base import BaseController
+from flask_restx import Resource, Namespace
 
-class APIController(Resource, BaseController):
-    def __init__(self, api=None, *args, **kwargs):
-        """
-        Inizializza il controller API
-        :param api: L'istanza dell'API Flask-RESTx
-        """
-        Resource.__init__(self, api, *args, **kwargs)
-        BaseController.__init__(self)
-    
+# Crea il namespace principale
+api_ns = Namespace('', description='API operations')
+
+@api_ns.route('/')
+class APIController(Resource):
+    @api_ns.doc('get_status')
+    @api_ns.response(200, 'Success')
+    @api_ns.response(429, 'Too Many Requests')
     def get(self):
-        """Gestisce le richieste GET all'endpoint principale dell'API"""
-        current_app.logger.info("API GET request received")
+        """Endpoint principale dell'API"""
         return {
             'success': True,
             'message': 'Flask API is running'
         }
     
+    @api_ns.doc('post_test')
+    @api_ns.response(200, 'Success')
+    @api_ns.response(429, 'Too Many Requests')
     def post(self):
-        """Gestisce le richieste POST all'endpoint principale dell'API"""
-        current_app.logger.info("API POST request received")
+        """Test endpoint POST"""
         return {
             'success': True,
             'message': 'POST request processed successfully'
         }
 
-    def handle_error(self, message, status_code=400):
-        """Gestisce gli errori dell'API"""
-        current_app.logger.warning(f"API error: {message}")
+@api_ns.route('/test-error')
+class APIErrorController(Resource):
+    @api_ns.doc('get_error')
+    @api_ns.response(400, 'Bad Request')
+    def get(self):
+        """Test endpoint per gli errori"""
         return {
             'success': False,
-            'message': message
-        }, status_code 
+            'message': 'Questo è un errore di test'
+        }, 400 
