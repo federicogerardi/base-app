@@ -145,4 +145,22 @@ p {
 /* Override Bootstrap's default text colors */
 .text-body {
     color: var(--text-primary) !important;
+}
+
+/* List Group Overrides */
+.list-group-item {
+    background-color: transparent;
+    color: var(--text-primary);
+}
+
+.list-group-item i {
+    color: var(--text-primary);
+}
+
+.list-group-item span {
+    color: var(--text-primary);
+}
+
+.list-group-item:hover {
+    background-color: var(--border-color);
 } 
