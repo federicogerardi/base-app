@@ -10,20 +10,20 @@
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <!-- Custom Theme -->
-    <link href="{{ url_for('static', filename='css/theme.css') }}" rel="stylesheet">
+    <link href="{{ safe_url_for('static', filename='css/theme.css') }}" rel="stylesheet">
 </head>
 <body>
     <!-- Navbar con effetto glassmorphism -->
     <nav class="navbar navbar-expand-lg sticky-top border-bottom">
         <div class="container">
-            <a class="navbar-brand d-flex align-items-center gap-2" href="{{ url_for('web.index') }}">
+            <a class="navbar-brand d-flex align-items-center gap-2 text-body" href="{{ safe_url_for('web.index') }}">
                 <div class="tech-icon">
                     <i class="fas fa-cube"></i>
                 </div>
                 <span class="fw-bold">Your App</span>
             </a>
             
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             
@@ -31,7 +31,7 @@
                 <ul class="navbar-nav me-auto">
                     {% if current_user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ safe_url_for('dashboard.index') }}">
+                        <a class="nav-link text-body" href="{{ safe_url_for('dashboard.index') }}">
                             <i class="fas fa-chart-line"></i> Dashboard
                         </a>
                     </li>
@@ -40,29 +40,29 @@
                 <ul class="navbar-nav ms-auto align-items-center">
                     {% if current_user.is_authenticated %}
                     <li class="nav-item me-2">
-                        <div class="border rounded-3 p-1 bg-light bg-opacity-10">
-                            <button class="btn btn-sm" onclick="toggleTheme()">
+                        <div class="border rounded-3 p-1">
+                            <button class="btn btn-sm text-body" onclick="toggleTheme()">
                                 <i class="fas fa-sun"></i>
                                 <i class="fas fa-moon d-none"></i>
                             </button>
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('auth.logout') }}">
+                        <a class="nav-link text-body" href="{{ safe_url_for('auth.logout') }}">
                             <i class="fas fa-sign-out-alt"></i> Logout
                         </a>
                     </li>
                     {% else %}
                     <li class="nav-item me-2">
-                        <div class="border rounded-3 p-1 bg-light bg-opacity-10">
-                            <button class="btn btn-sm" onclick="toggleTheme()">
+                        <div class="border rounded-3 p-1">
+                            <button class="btn btn-sm text-body" onclick="toggleTheme()">
                                 <i class="fas fa-sun"></i>
                                 <i class="fas fa-moon d-none"></i>
                             </button>
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('auth.login') }}">
+                        <a class="nav-link text-body" href="{{ safe_url_for('auth.login') }}">
                             <i class="fas fa-sign-in-alt"></i> Login
                         </a>
                     </li>
