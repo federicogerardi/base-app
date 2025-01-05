@@ -13,9 +13,6 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb mb-0">
                     <li class="breadcrumb-item">
-                        <a href="{{ safe_url_for('dashboard.index') }}" class="text-decoration-none">Dashboard</a>
-                    </li>
-                    <li class="breadcrumb-item">
                         <a href="{{ safe_url_for('sheet.index') }}" class="text-decoration-none">Fogli</a>
                     </li>
                     <li class="breadcrumb-item active">{{ sheet.name }}</li>
@@ -45,7 +42,7 @@
             </div>
             <div>
                 <h5 class="text-muted mb-2">Data Creazione</h5>
-                <p class="mb-0">{{ sheet.created_at }}</p>
+                <p class="mb-0">{{ sheet.created_at|datetime }}</p>
             </div>
         </div>
     </div>
