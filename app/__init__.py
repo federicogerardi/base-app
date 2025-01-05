@@ -47,11 +47,13 @@ def register_blueprints(app):
     from app.routes.web import web
     from app.routes.dashboard import dashboard
     from app.routes.sheet import sheet
+    from app.routes.api import api_bp
     
     app.register_blueprint(auth_bp, url_prefix='/auth')
     app.register_blueprint(web)
     app.register_blueprint(dashboard)
     app.register_blueprint(sheet)
+    app.register_blueprint(api_bp)
 
 def register_error_handlers(app):
     """Registra gli handler per gli errori"""
