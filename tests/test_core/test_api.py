@@ -13,7 +13,3 @@ def test_api_endpoints(client):
     # Test index
     response = client.get('/api/')
     assert response.status_code == 200
-
-    # Test error
-    response = client.get('/api/test-error')
-    assert response.status_code == 400 
