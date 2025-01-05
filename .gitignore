@@ -49,4 +49,4 @@ htmlcov/
 
 # Custom
 appunti.txt
-scripts/reset_users.py
+# scripts/reset_users.py
