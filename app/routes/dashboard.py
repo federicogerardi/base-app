@@ -1,6 +1,6 @@
 from flask import Blueprint
 from flask_login import login_required
-from app.controllers.dashboard_controller import DashboardController
+from app.controllers.dashboard import DashboardController
 
 dashboard = Blueprint('dashboard', __name__)
 

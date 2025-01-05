@@ -32,6 +32,6 @@ success_model = api.model('Success', {
 # Importa i controllers qui per evitare import circolari
 def init_api(app):
     """Inizializza l'API e la documentazione"""
-    from app.controllers import routes  # Importa le route qui
+    from app.controllers.dashboard import DashboardController  # Assicurati che questo sia corretto
     app.register_blueprint(blueprint)
     return api 
