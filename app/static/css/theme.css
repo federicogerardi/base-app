@@ -69,13 +69,13 @@ body {
   color: white;
 }
 
-.feature-card {
+.home-card .feature-card {
   border: 1px solid var(--border-color);
   border-radius: 12px;
   transition: all 0.3s ease;
 }
 
-.feature-card:hover {
+.home-card .feature-card:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-md);
 }
@@ -112,4 +112,41 @@ body {
 /* Custom Breadcrumb */
 .breadcrumb-item + .breadcrumb-item::before {
   color: var(--text-secondary);
+}
+
+/* Typography Overrides */
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6,
+.display-1, .display-2, .display-3, .display-4, .display-5, .display-6 {
+    color: var(--text-primary);
+}
+
+.lead,
+.card-text,
+p {
+    color: var(--text-primary);
+}
+
+.text-muted,
+.text-secondary {
+    color: var(--text-secondary) !important;
+}
+
+/* Card Overrides */
+.card {
+    background-color: var(--card-bg);
+    border-color: var(--border-color);
+}
+
+.card-body {
+    color: var(--text-primary);
+}
+
+.card-title {
+    color: var(--text-primary);
+}
+
+/* Override Bootstrap's default text colors */
+.text-body {
+    color: var(--text-primary) !important;
 } 
