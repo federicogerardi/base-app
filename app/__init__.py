@@ -31,20 +31,32 @@ def create_app(config_name='development'):
     init_template_helpers(app)
     
     # Registra i blueprint
-    from app.routes.auth import bp as auth_bp
-    from app.controllers.web_routes import web as web_bp
-    from app.routes.dashboard import dashboard
-    
-    app.register_blueprint(auth_bp, url_prefix='/auth')
-    app.register_blueprint(web_bp)
-    app.register_blueprint(dashboard)
+    register_blueprints(app)
     
     # Inizializza l'API
     api = init_api(app)
     
+    # Gestione errori
+    register_error_handlers(app)
+    
+    return app
+
+def register_blueprints(app):
+    """Registra tutti i blueprint dell'applicazione"""
+    from app.routes.auth import bp as auth_bp
+    from app.routes.web import web
+    from app.routes.dashboard import dashboard
+    from app.routes.sheet import sheet
+    
+    app.register_blueprint(auth_bp, url_prefix='/auth')
+    app.register_blueprint(web)
+    app.register_blueprint(dashboard)
+    app.register_blueprint(sheet)
+
+def register_error_handlers(app):
+    """Registra gli handler per gli errori"""
     @app.errorhandler(Exception)
     def handle_exception(error):
-        """Gestisce le eccezioni non catturate."""
         if isinstance(error, AppException):
             return jsonify({
                 'success': False,
@@ -62,5 +74,3 @@ def create_app(config_name='development'):
             'success': False,
             'message': 'Internal Server Error'
         }), 500
-    
-    return app

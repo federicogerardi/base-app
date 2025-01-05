@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Dettaglio Foglio{% endblock %}
+{% block title %}{{ sheet.name }}{% endblock %}
 
 {% block content %}
 <div class="container py-4">
@@ -8,17 +8,17 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div class="d-flex align-items-center gap-3">
             <h1 class="h3 mb-0">
-                <i class="fas fa-file-alt text-primary"></i> Foglio #{{ sheet_id }}
+                <i class="fas fa-file-alt text-primary"></i> {{ sheet.name }}
             </h1>
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb mb-0">
                     <li class="breadcrumb-item">
-                        <a href="{{ url_for('dashboard.index') }}" class="text-decoration-none">Dashboard</a>
+                        <a href="{{ safe_url_for('dashboard.index') }}" class="text-decoration-none">Dashboard</a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="{{ url_for('dashboard.sheet_index') }}" class="text-decoration-none">Fogli</a>
+                        <a href="{{ safe_url_for('sheet.index') }}" class="text-decoration-none">Fogli</a>
                     </li>
-                    <li class="breadcrumb-item active">Dettaglio</li>
+                    <li class="breadcrumb-item active">{{ sheet.name }}</li>
                 </ol>
             </nav>
         </div>
@@ -35,9 +35,18 @@
     <!-- Content -->
     <div class="card shadow-sm">
         <div class="card-body">
-            <p class="text-muted mb-0">
-                Contenuto del foglio...
-            </p>
+            <div class="mb-3">
+                <h5 class="text-muted mb-2">Descrizione</h5>
+                <p>{{ sheet.description }}</p>
+            </div>
+            <div class="mb-3">
+                <h5 class="text-muted mb-2">Stato</h5>
+                <span class="badge bg-{{ sheet.status_color }}">{{ sheet.status }}</span>
+            </div>
+            <div>
+                <h5 class="text-muted mb-2">Data Creazione</h5>
+                <p class="mb-0">{{ sheet.created_at }}</p>
+            </div>
         </div>
     </div>
 </div>
