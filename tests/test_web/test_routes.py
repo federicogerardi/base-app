@@ -13,6 +13,12 @@ def test_dashboard_page(client):
     # Redirect al login perché non autenticato
     assert response.status_code == 302
 
+def test_users_page(client):
+    """Test della pagina dashboard"""
+    response = client.get('/dashboard/users')
+    # Redirect al login perché non autenticato
+    assert response.status_code == 302
+
 def test_404_page(client):
     """Test della pagina 404"""
     response = client.get('/pagina-non-esistente')

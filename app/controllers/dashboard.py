@@ -16,3 +16,10 @@ class DashboardController(BaseController):
                                   title="Dashboard")
         except Exception as e:
             return self.handle_error(str(e)) 
+    
+    def users(self):
+        """Logica per la gestione degli utenti"""
+        try:
+            return self.render_view('users.html', title="Gestione Utenti")
+        except Exception as e:
+            return self.handle_error(str(e)) 
