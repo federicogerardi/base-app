@@ -14,41 +14,43 @@
 
             <!-- Pulsante per aggiungere un nuovo utente -->
             <div class="mb-3">
-                <a href="{{ safe_url_for('auth.register') }}" class="btn btn-primary">
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addUserModal">
                     <i class="fas fa-user-plus"></i> Aggiungi Utente
-                </a>
+                </button>
             </div>
 
             <!-- Tabella degli utenti -->
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Username</th>
-                        <th>Email</th>
-                        <th>Ruolo</th>
-                        <th>Azioni</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for user in users %}
-                    <tr>
-                        <td>{{ user.id }}</td>
-                        <td>{{ user.username }}</td>
-                        <td>{{ user.email }}</td>
-                        <td>{{ user.role.value }}</td>
-                        <td>
-                            <a href="{{ safe_url_for('auth.edit_user', user_id=user.id) }}" class="btn btn-warning btn-sm">
-                                <i class="fas fa-edit"></i> Modifica
-                            </a>
-                            <a href="{{ safe_url_for('auth.delete_user', user_id=user.id) }}" class="btn btn-danger btn-sm" onclick="return confirm('Sei sicuro di voler eliminare questo utente?');">
-                                <i class="fas fa-trash"></i> Elimina
-                            </a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Ruolo</th>
+                            <th>Azioni</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                        <tr>
+                            <td>{{ user.id }}</td>
+                            <td>{{ user.username }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.role.value | capitalize }}</td>
+                            <td>
+                                <a href="{{ safe_url_for('auth.edit_user', user_id=user.id) }}" class="btn btn-warning btn-sm">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="{{ safe_url_for('auth.delete_user', user_id=user.id) }}" class="btn btn-danger btn-sm" onclick="return confirm('Sei sicuro di voler eliminare questo utente?');">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
 
             {% if not users %}
             <div class="alert alert-info" role="alert">
@@ -58,4 +60,132 @@
         </div>
     </div>
 </div>
+
+<!-- Modale per aggiungere un nuovo utente -->
+<div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" style="background-color: var(--card-bg); border-color: var(--border-color);">
+            <div class="modal-header" style="border-bottom-color: var(--border-color);">
+                <h5 class="modal-title" id="addUserModalLabel" style="color: var(--text-primary);">Aggiungi Nuovo Utente</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" 
+                        style="filter: var(--text-primary-filter);"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addUserForm" method="POST">
+                    {{ form.csrf_token }}
+                    <div class="mb-3">
+                        <label for="username" class="form-label" style="color: var(--text-primary);">Username</label>
+                        <input type="text" class="form-control" id="username" name="username" required
+                               style="background-color: var(--body-bg); color: var(--text-primary); border-color: var(--border-color);">
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label" style="color: var(--text-primary);">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" required
+                               style="background-color: var(--body-bg); color: var(--text-primary); border-color: var(--border-color);">
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label" style="color: var(--text-primary);">Password</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="password" name="password" required
+                                   style="background-color: var(--body-bg); color: var(--text-primary); border-color: var(--border-color);">
+                            <button class="btn btn-outline-secondary" type="button" onclick="togglePassword(this)"
+                                    style="background-color: var(--body-bg); color: var(--text-primary); border-color: var(--border-color);">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="role" class="form-label" style="color: var(--text-primary);">Ruolo</label>
+                        <select class="form-select" id="role" name="role" required
+                                style="background-color: var(--body-bg); color: var(--text-primary); border-color: var(--border-color);">
+                            <option value="user">Utente</option>
+                            <option value="admin">Amministratore</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Aggiungi Utente</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Aggiungi questo stile CSS per il bottone di chiusura della modale -->
+<style>
+    /* Stile per il pulsante di chiusura della modale nel tema scuro */
+    [data-theme="dark"] .btn-close {
+        filter: invert(1) grayscale(100%) brightness(200%);
+    }
+
+    /* Stile per le opzioni del select nel tema scuro */
+    [data-theme="dark"] .form-select option {
+        background-color: var(--body-bg);
+        color: var(--text-primary);
+    }
+
+    /* Hover effect per i campi di input */
+    .form-control:hover, .form-select:hover {
+        border-color: var(--primary);
+    }
+
+    /* Focus effect per i campi di input */
+    .form-control:focus, .form-select:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 0.25rem rgba(99, 102, 241, 0.25);
+    }
+
+    /* Stile per il bordo inferiore della modale */
+    .modal-footer {
+        border-top-color: var(--border-color);
+    }
+</style>
+
+<script>
+function togglePassword(button) {
+    const input = button.parentElement.querySelector('input');
+    const icon = button.querySelector('i');
+    
+    if (input.type === 'password') {
+        input.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+    } else {
+        input.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+    }
+}
+
+document.getElementById('addUserForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const formData = new FormData(this);
+    const data = {
+        username: formData.get('username'),
+        email: formData.get('email'),
+        password: formData.get('password'),
+        role: formData.get('role')
+    };
+
+    fetch('{{ safe_url_for("dashboard.add_user") }}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': document.querySelector('#csrf_token').value
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            throw new Error(data.error);
+        }
+        alert(data.message);
+        location.reload();
+    })
+    .catch(error => {
+        alert('Errore: ' + error.message);
+        console.error('Errore:', error);
+    });
+});
+</script>
 {% endblock %}

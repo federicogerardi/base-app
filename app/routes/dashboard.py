@@ -16,3 +16,8 @@ def index():
 @admin_required
 def users():
     return dashboard_controller.users()
+
+@dashboard.route('/dashboard/users/add', methods=['POST'])
+@admin_required
+def add_user():
+    return dashboard_controller.add_user()

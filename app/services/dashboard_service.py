@@ -1,12 +1,27 @@
 from datetime import datetime, timedelta
 from app.models import User
 from app.core.database import DatabaseManager
+from app.models.user import UserRole
 
 class DashboardService:
     @staticmethod
     def get_all_users():
         """Recupera tutti gli utenti dal database"""
         return DatabaseManager.get_all(User)
+
+    @staticmethod
+    def create_user(username, email, password, role):
+        """Crea un nuovo utente"""
+        try:
+            new_user = User(
+                username=username,
+                email=email,
+                password=password,
+                role=UserRole[role.upper()]
+            )
+            return DatabaseManager.add(new_user)
+        except Exception as e:
+            raise Exception(f"Errore durante la creazione dell'utente: {str(e)}")
 
     @staticmethod
     def get_dashboard_stats():

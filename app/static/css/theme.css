@@ -192,4 +192,61 @@ p {
 
 .form-label {
     color: var(--text-primary);
+}
+
+/* Table Overrides */
+.table {
+    color: var(--text-primary);
+    background-color: var(--card-bg);
+    border-color: var(--border-color);
+}
+
+.table thead th {
+    background-color: var(--card-bg);
+    color: var(--text-primary);
+    border-bottom: 2px solid var(--border-color);
+}
+
+.table td, 
+.table th {
+    border-color: var(--border-color);
+    background-color: transparent;
+    color: var(--text-primary);
+}
+
+.table tbody tr {
+    color: var(--text-primary);
+}
+
+.table tbody tr:nth-of-type(odd) {
+    background-color: rgba(var(--gray-200), 0.05);
+}
+
+.table tbody tr:hover {
+    background-color: var(--border-color);
+}
+
+.table-responsive {
+    border-radius: 0.5rem;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+}
+
+/* Dark theme specifici per la tabella */
+[data-theme="dark"] .table {
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .table tbody tr:nth-of-type(odd) {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .table tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.075);
+}
+
+[data-theme="dark"] .table td,
+[data-theme="dark"] .table th {
+    color: var(--text-primary);
 } 
