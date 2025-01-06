@@ -1,5 +1,3 @@
-# 📚 Nome dell'Applicazione
-
 ## 📝 Descrizione
 Questa applicazione è un kit di avvio per Flask che fornisce una base solida per lo sviluppo di applicazioni web. Include funzionalità di autenticazione, gestione degli utenti e una dashboard per visualizzare le statistiche. Si tratta di un progetto di studio personale.
 
