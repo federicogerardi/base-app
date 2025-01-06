@@ -20,6 +20,7 @@ class DashboardController(BaseController):
     def users(self):
         """Logica per la gestione degli utenti"""
         try:
-            return self.render_view('users.html', title="Gestione Utenti")
+            users = DashboardService.get_all_users()
+            return self.render_view('users.html', title="Gestione Utenti", users=users)
         except Exception as e:
             return self.handle_error(str(e)) 

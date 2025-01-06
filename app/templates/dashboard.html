@@ -4,113 +4,121 @@
 
 {% block content %}
 <div class="container py-4">
-    <!-- Header -->
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <div class="d-flex align-items-center gap-2">
-            <div class="tech-icon">
-                <i class="fas fa-tachometer-alt"></i>
-            </div>
-            <h1 class="h3 mb-0">Dashboard</h1>
-        </div>
-        <button class="btn btn-primary" onclick="location.reload()">
-            <i class="fas fa-sync-alt me-2"></i>
-            Aggiorna
-        </button>
-    </div>
+    <div class="row">
+        <!-- Sidebar -->
+        {% include 'sidebar.html' %}
 
-    <!-- Stats Cards -->
-    <div class="row g-4 mb-4">
-        <!-- Utenti -->
-        <div class="col-md-3">
-            <div class="card h-100">
+        <!-- Main Content -->
+        <div class="col-md-9">
+            <!-- Header -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div class="d-flex align-items-center gap-2">
+                    <div class="tech-icon">
+                        <i class="fas fa-tachometer-alt"></i>
+                    </div>
+                    <h1 class="h3 mb-0">Dashboard</h1>
+                </div>
+                <button class="btn btn-primary" onclick="location.reload()">
+                    <i class="fas fa-sync-alt me-2"></i>
+                    Aggiorna
+                </button>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="row g-4 mb-4">
+                <!-- Utenti -->
+                <div class="col-md-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="tech-icon">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <div>
+                                    <h6 class="text-secondary mb-1">Utenti</h6>
+                                    <h2 class="mb-0">{{ stats.total_users }}</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Attivi -->
+                <div class="col-md-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="tech-icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div>
+                                    <h6 class="text-secondary mb-1">Attivi</h6>
+                                    <h2 class="mb-0">{{ stats.active_users }}</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- In attesa -->
+                <div class="col-md-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="tech-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div>
+                                    <h6 class="text-secondary mb-1">In attesa</h6>
+                                    <h2 class="mb-0">{{ stats.pending_users }}</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Crescita -->
+                <div class="col-md-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="tech-icon">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <div>
+                                    <h6 class="text-secondary mb-1">Crescita</h6>
+                                    <h2 class="mb-0">{{ stats.growth }}</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="card">
                 <div class="card-body">
-                    <div class="d-flex align-items-center gap-3">
+                    <div class="d-flex align-items-center gap-3 mb-4">
                         <div class="tech-icon">
-                            <i class="fas fa-users"></i>
+                            <i class="fas fa-history"></i>
                         </div>
-                        <div>
-                            <h6 class="text-secondary mb-1">Utenti</h6>
-                            <h2 class="mb-0">{{ stats.total_users }}</h2>
+                        <h5 class="mb-0">Attività Recenti</h5>
+                    </div>
+                    
+                    <div class="list-group">
+                        {% for activity in activities %}
+                        <div class="list-group-item border-0 px-0">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center gap-2">
+                                    <i class="fas fa-{{ activity.icon }}"></i>
+                                    <span>{{ activity.text }}</span>
+                                </div>
+                                <small class="text-secondary">{{ activity.time }}</small>
+                            </div>
                         </div>
+                        {% endfor %}
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <!-- Attivi -->
-        <div class="col-md-3">
-            <div class="card h-100">
-                <div class="card-body">
-                    <div class="d-flex align-items-center gap-3">
-                        <div class="tech-icon">
-                            <i class="fas fa-check-circle"></i>
-                        </div>
-                        <div>
-                            <h6 class="text-secondary mb-1">Attivi</h6>
-                            <h2 class="mb-0">{{ stats.active_users }}</h2>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- In attesa -->
-        <div class="col-md-3">
-            <div class="card h-100">
-                <div class="card-body">
-                    <div class="d-flex align-items-center gap-3">
-                        <div class="tech-icon">
-                            <i class="fas fa-clock"></i>
-                        </div>
-                        <div>
-                            <h6 class="text-secondary mb-1">In attesa</h6>
-                            <h2 class="mb-0">{{ stats.pending_users }}</h2>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Crescita -->
-        <div class="col-md-3">
-            <div class="card h-100">
-                <div class="card-body">
-                    <div class="d-flex align-items-center gap-3">
-                        <div class="tech-icon">
-                            <i class="fas fa-chart-line"></i>
-                        </div>
-                        <div>
-                            <h6 class="text-secondary mb-1">Crescita</h6>
-                            <h2 class="mb-0">{{ stats.growth }}</h2>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Recent Activity -->
-    <div class="card">
-        <div class="card-body">
-            <div class="d-flex align-items-center gap-3 mb-4">
-                <div class="tech-icon">
-                    <i class="fas fa-history"></i>
-                </div>
-                <h5 class="mb-0">Attività Recenti</h5>
-            </div>
-            
-            <div class="list-group">
-                {% for activity in activities %}
-                <div class="list-group-item border-0 px-0">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div class="d-flex align-items-center gap-2">
-                            <i class="fas fa-{{ activity.icon }}"></i>
-                            <span>{{ activity.text }}</span>
-                        </div>
-                        <small class="text-secondary">{{ activity.time }}</small>
-                    </div>
-                </div>
-                {% endfor %}
             </div>
         </div>
     </div>

@@ -1,7 +1,13 @@
 from datetime import datetime, timedelta
 from app.models import User
+from app.core.database import DatabaseManager
 
 class DashboardService:
+    @staticmethod
+    def get_all_users():
+        """Recupera tutti gli utenti dal database"""
+        return DatabaseManager.get_all(User)
+
     @staticmethod
     def get_dashboard_stats():
         """Recupera le statistiche per la dashboard"""
@@ -15,7 +21,6 @@ class DashboardService:
     @staticmethod
     def get_recent_activities():
         """Recupera le attività recenti"""
-        # Per ora restituiamo dati statici
         return [
             {
                 'icon': 'user-plus',
