@@ -1,8 +1,11 @@
-from flask import Blueprint, render_template
+from flask import Blueprint
+from app.controllers.web import WebController
 
 web = Blueprint('web', __name__)
 
+web_controller = WebController()
+
 @web.route('/')
 def index():
-    return render_template('index.html')
+    return web_controller.index()
 
