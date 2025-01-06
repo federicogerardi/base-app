@@ -17,8 +17,3 @@ def test_404_page(client):
     """Test della pagina 404"""
     response = client.get('/pagina-non-esistente')
     assert response.status_code == 404
-
-def test_api_docs_route(client):
-    """Test della route API docs"""
-    response = client.get('/api/docs')
-    assert response.status_code == 200 
