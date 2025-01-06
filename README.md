@@ -1,5 +1,7 @@
 ## 📝 Descrizione
-Questa applicazione è un kit di avvio per Flask che fornisce una base solida per lo sviluppo di applicazioni web. Include funzionalità di autenticazione, gestione degli utenti e una dashboard per visualizzare le statistiche. Si tratta di un progetto di studio personale.
+Questa applicazione è un kit di avvio per Flask che fornisce una base solida per lo sviluppo di applicazioni web amatoriali. Include funzionalità di autenticazione, gestione degli utenti e una dashboard per admin. Si tratta di un progetto di studio personale.
+
+Mi auguro sia utile come base di studio perché rispetta i principi MVC per un applicazione Flask.
 
 ## 🚀 Caratteristiche
 - **Autenticazione JWT**: Utilizza JSON Web Tokens per gestire l'autenticazione degli utenti.
