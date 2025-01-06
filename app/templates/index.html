@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Homepage{% endblock %}
+{% block title %}{{ title }}{% endblock %}
 
 {% block content %}
 <div class="row justify-content-center">
@@ -12,50 +12,25 @@
                     <div class="tech-icon">
                         <i class="fas fa-cube"></i>
                     </div>
-                    <h1 class="display-4 fw-bold mb-0">Benvenuto</h1>
+                    <h1 class="display-4 fw-bold mb-0">{{ welcome_message }}</h1>
                 </div>
                 
 
                 <!-- Feature Cards -->
                 <div class="row g-4 py-4">
-                    <!-- Card Veloce -->
+                    {% for feature in features %}
                     <div class="col-md-4">
                         <div class="card h-100">
                             <div class="card-body p-4">
                                 <div class="tech-icon mb-3">
-                                    <i class="fas fa-rocket"></i>
+                                    <i class="fas fa-{{ feature.icon }}"></i>
                                 </div>
-                                <h5 class="card-title">Veloce</h5>
-                                <p class="text-secondary mb-0">Performance ottimizzate</p>
+                                <h5 class="card-title">{{ feature.title }}</h5>
+                                <p class="text-secondary mb-0">{{ feature.description }}</p>
                             </div>
                         </div>
                     </div>
-                    
-                    <!-- Card Sicura -->
-                    <div class="col-md-4">
-                        <div class="card h-100">
-                            <div class="card-body p-4">
-                                <div class="tech-icon mb-3">
-                                    <i class="fas fa-shield-alt"></i>
-                                </div>
-                                <h5 class="card-title">Sicura</h5>
-                                <p class="text-secondary mb-0">JWT Authentication</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Card Moderna -->
-                    <div class="col-md-4">
-                        <div class="card h-100">
-                            <div class="card-body p-4">
-                                <div class="tech-icon mb-3">
-                                    <i class="fas fa-code"></i>
-                                </div>
-                                <h5 class="card-title">Moderna</h5>
-                                <p class="text-secondary mb-0">lorem ipsum</p>
-                            </div>
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
 
             </div>
