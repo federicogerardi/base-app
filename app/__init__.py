@@ -8,7 +8,6 @@ from app.config import config_by_name
 from app.core.database import init_db
 from app.core.auth import init_auth
 from app.core.security import init_security
-from app.core.api import init_api
 from app.core.exceptions import AppException
 from app.core.logger import setup_logger
 from app.core.template_helpers import init_template_helpers
@@ -33,8 +32,6 @@ def create_app(config_name='development'):
     # Registra i blueprint
     register_blueprints(app)
     
-    # Inizializza l'API
-    api = init_api(app)
     
     # Gestione errori
     register_error_handlers(app)
@@ -46,12 +43,10 @@ def register_blueprints(app):
     from app.routes.auth import bp as auth_bp
     from app.routes.web import web
     from app.routes.dashboard import dashboard
-    from app.routes.api import api_bp
     
     app.register_blueprint(auth_bp, url_prefix='/auth')
     app.register_blueprint(web)
     app.register_blueprint(dashboard)
-    app.register_blueprint(api_bp)
 
 def register_error_handlers(app):
     """Registra gli handler per gli errori"""
