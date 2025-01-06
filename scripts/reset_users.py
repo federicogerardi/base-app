@@ -1,3 +1,5 @@
+# ATTENZIONE: Questo script cancella la tabella User e la ricrea con l'utente admin di default.
+
 import os
 import sys
 from datetime import UTC, datetime
@@ -13,6 +15,12 @@ def reset_users():
     app = create_app()
     
     with app.app_context():
+        # Aggiungi input di conferma
+        confirm = input("Sei sicuro di voler resettare il database? (s/n): ")
+        if confirm.lower() != 's':
+            print("Operazione annullata.")
+            return
+        
         # Drop e ricrea la tabella User
         print("Eliminazione tabella User...")
         db.session.execute(text('DROP TABLE IF EXISTS users'))
