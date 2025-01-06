@@ -5,17 +5,22 @@ class BaseController:
     def __init__(self, model_class=None):
         """
         Inizializza il controller base.
+        
         Args:
-            model_class: La classe del modello associato al controller
+            model_class: La classe del modello associato al controller.
         """
         self.model_class = model_class
     
     def json_response(self, data, status=200):
         """
         Standardizza le risposte JSON dell'API.
+        
         Args:
-            data: Dati da restituire
-            status: Status code HTTP (default: 200)
+            data: Dati da restituire.
+            status: Status code HTTP (default: 200).
+        
+        Returns:
+            Tuple contenente la risposta JSON e il codice di stato.
         """
         return jsonify({
             'success': 200 <= status < 300,
@@ -25,17 +30,25 @@ class BaseController:
     def render_view(self, template, **kwargs):
         """
         Standardizza il rendering delle viste.
+        
         Args:
-            template: Path del template
-            kwargs: Variabili da passare al template
+            template: Path del template da renderizzare.
+            kwargs: Variabili da passare al template.
+        
+        Returns:
+            Risultato del rendering del template.
         """
         return render_template(template, **kwargs)
     
     def handle_error(self, error, status_code=400):
         """
         Gestisce gli errori in modo uniforme.
+        
         Args:
-            error: Messaggio di errore
-            status_code: Status code HTTP (default: 400)
+            error: Messaggio di errore.
+            status_code: Status code HTTP (default: 400).
+        
+        Raises:
+            AppException: Eccezione personalizzata per la gestione degli errori.
         """
         raise AppException(str(error), status_code=status_code)

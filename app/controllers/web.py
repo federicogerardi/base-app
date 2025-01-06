@@ -6,7 +6,10 @@ class WebController(BaseController):
         super().__init__()
     
     def index(self):
-        """Logica per la pagina principale"""
+        """Logica per la pagina principale.
+        
+        Recupera i dati necessari per la homepage e rende il template.
+        """
         try:
             home_data = WebService.get_home_data()
             return self.render_view('index.html',

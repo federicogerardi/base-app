@@ -22,7 +22,10 @@ class DashboardController(BaseController):
     
     @admin_required
     def index(self):
-        """Logica per la dashboard principale"""
+        """Logica per la dashboard principale.
+        
+        Recupera le statistiche e le attività recenti da visualizzare nella dashboard.
+        """
         try:
             stats = DashboardService.get_dashboard_stats()
             activities = DashboardService.get_recent_activities()
@@ -35,7 +38,10 @@ class DashboardController(BaseController):
     
     @admin_required
     def users(self):
-        """Logica per la gestione degli utenti"""
+        """Logica per la gestione degli utenti.
+        
+        Recupera la lista degli utenti e prepara il modulo per aggiungere un nuovo utente.
+        """
         try:
             users = DashboardService.get_all_users()
             form = AddUserForm()
@@ -48,7 +54,11 @@ class DashboardController(BaseController):
 
     @admin_required
     def add_user(self):
-        """Logica per aggiungere un nuovo utente"""
+        """Logica per aggiungere un nuovo utente.
+        
+        Valida i dati dell'utente e lo aggiunge al database. 
+        Richiede che la richiesta sia in formato JSON.
+        """
         try:
             if not request.is_json:
                 return jsonify({"error": "Richiesta non valida: Content-Type deve essere application/json"}), 400

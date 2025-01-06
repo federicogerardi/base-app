@@ -11,7 +11,10 @@ class AuthController(BaseController):
         super().__init__(model_class=User)
     
     def login(self):
-        """Gestisce la pagina di login"""
+        """Gestisce la visualizzazione della pagina di login.
+        
+        Se l'utente è già autenticato, viene reindirizzato alla dashboard.
+        """
         if current_user.is_authenticated:
             return redirect(url_for('dashboard.index'))
             
@@ -21,7 +24,11 @@ class AuthController(BaseController):
                               form=form)
     
     def login_post(self):
-        """Gestisce il processo di login"""
+        """Gestisce il processo di login.
+        
+        Valida il modulo di login e autentica l'utente. Se il login ha successo,
+        l'utente viene reindirizzato alla pagina successiva o alla dashboard.
+        """
         try:
             form = LoginForm()
             current_app.logger.info(f"Login attempt with email: {form.email.data}")
@@ -54,7 +61,10 @@ class AuthController(BaseController):
             return self.handle_error(str(e))
 
     def register(self):
-        """Gestisce la pagina di registrazione"""
+        """Gestisce la visualizzazione della pagina di registrazione.
+        
+        Se l'utente è già autenticato, viene reindirizzato alla dashboard.
+        """
         if current_user.is_authenticated:
             return redirect(url_for('dashboard.index'))
             
@@ -64,7 +74,11 @@ class AuthController(BaseController):
                               form=form)
     
     def register_post(self):
-        """Gestisce il processo di registrazione"""
+        """Gestisce il processo di registrazione.
+        
+        Valida il modulo di registrazione e crea un nuovo utente. Se la registrazione ha successo,
+        l'utente viene reindirizzato alla pagina di login.
+        """
         try:
             form = RegistrationForm()
             
@@ -89,7 +103,10 @@ class AuthController(BaseController):
             return self.handle_error(str(e))
 
     def logout(self):
-        """Gestisce il processo di logout"""
+        """Gestisce il processo di logout.
+        
+        Effettua il logout dell'utente e lo reindirizza alla pagina di login.
+        """
         try:
             success, message = AuthService.logout()
             if success:
