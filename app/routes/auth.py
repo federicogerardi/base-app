@@ -15,15 +15,15 @@ def login_post():
     """Gestisce il processo di login"""
     return auth_controller.login_post()
 
-@bp.route('/register', methods=['GET'])
-def register():
-    """Mostra la pagina di registrazione"""
-    return auth_controller.register()
+# @bp.route('/register', methods=['GET'])
+# def register():
+#     """Mostra la pagina di registrazione"""
+#     return auth_controller.register()
 
-@bp.route('/register', methods=['POST'])
-def register_post():
-    """Gestisce il processo di registrazione"""
-    return auth_controller.register_post()
+# @bp.route('/register', methods=['POST'])
+# def register_post():
+#     """Gestisce il processo di registrazione"""
+#     return auth_controller.register_post()
 
 @bp.route('/logout')
 def logout():
