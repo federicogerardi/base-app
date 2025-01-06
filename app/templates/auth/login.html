@@ -19,7 +19,7 @@
                     
                     <div class="mb-3">
                         {{ form.email.label(class="form-label") }}
-                        {{ form.email(class="form-control" + (" is-invalid" if form.email.errors else ""), placeholder="nome@esempio.com") }}
+                        {{ form.email(class="form-control" + (" is-invalid" if form.email.errors else ""), placeholder="nome@esempio.com", style="color: var(--text-primary);") }}
                         {% if form.email.errors %}
                             <div class="invalid-feedback">
                                 {{ form.email.errors[0] }}

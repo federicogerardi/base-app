@@ -249,4 +249,9 @@ p {
 [data-theme="dark"] .table td,
 [data-theme="dark"] .table th {
     color: var(--text-primary);
+}
+
+/* Aggiunta per il placeholder in dark mode */
+.form-control::placeholder {
+    color: var(--gray-400); /* Colore del placeholder per il dark mode */
 } 
