@@ -1,10 +1,12 @@
 from app.controllers.base import BaseController
 from app.services.dashboard_service import DashboardService
+from app.core.decorators import admin_required
 
 class DashboardController(BaseController):
     def __init__(self):
         super().__init__()
     
+    @admin_required
     def index(self):
         """Logica per la dashboard principale"""
         try:
@@ -17,6 +19,7 @@ class DashboardController(BaseController):
         except Exception as e:
             return self.handle_error(str(e)) 
     
+    @admin_required
     def users(self):
         """Logica per la gestione degli utenti"""
         try:
